@@ -1,0 +1,14 @@
+---
+ 
+- hosts: nodes
+  user: ubuntu
+  become: yes
+  
+  roles:
+  - geerlingguy.nginx
+  tasks:
+  - name: starting the nginx service
+    service:
+      name: nginx
+      state: started
+

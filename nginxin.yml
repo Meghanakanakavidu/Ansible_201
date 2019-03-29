@@ -1,0 +1,21 @@
+---
+
+- hosts: nodes
+  user: ubuntu
+  become: yes
+
+  roles:
+  - geerlingguy.nginx
+  tasks:
+  - name: copying file
+    copy:
+      src: /home/ubuntu/ansiblle_201/index.html
+      dest: /var/www/html/index.nginx-debian.html
+      owner: root
+      group: root
+      mode: 0644
+  - name: starting the nginx service
+    service:
+      name: nginx
+      state: restarted
+

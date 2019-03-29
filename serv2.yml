@@ -1,0 +1,11 @@
+---
+- hosts: local
+  user: ubuntu
+  become: yes
+  tasks:
+    - name: vm region placement
+      copy:
+        src: /home/ubuntu/ansiblle_201/sysctl.conf
+        dest: /etc/sysctl.conf
+ #       remote_src: no
+#      become: true 

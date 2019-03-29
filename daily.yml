@@ -1,0 +1,31 @@
+---
+
+- hosts: nodes
+  user: ubuntu
+  become: yes
+  tasks:
+  - name: creatin directory to take backup
+    file:
+      path: /home/backup
+      state: directory
+  - name: taking backup 
+    copy:
+      src: /201/file.txt
+      dest: /home/backup/
+      remote_src: yes
+      backup: yes
+  - name: clearing page cache
+    shell: sync; echo 1 > /proc/sys/vm/drop_caches
+  
+  - name: clearing dentries and inodes
+    shell: sync; echo 2 > /proc/sys/vm/drop_caches 
+  
+  - name: rebooting the servers
+    shell: ssh ubuntu@13.233.163.178 reboot
+    delegate_to: localhost
+    ignore_errors: yes
+  
+  - name: wait for connection
+    wait_for_connection:
+      delay: 60
+      timeout: 300
